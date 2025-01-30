@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gratech - IT Service HTML Template</title>
+    <title>Corporate event planner in Delhi, Gurgaon and Noida</title>
     <!-- Favicon img -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
     <!-- Bootstarp min css -->
@@ -146,28 +146,13 @@
                 border: none;
                 cursor: pointer;
                 overflow: hidden;
-                background: linear-gradient(90deg, #ff0000, #ff7300, #ffeb00, #47ff00, #00ffee, #4b00ff, #ff00ff);
+                background: linear-gradient(90deg, #ff000061, #ff730068, #ffea006a, #48ff008c, #00ffee84, #4c00ff5d, #ff00ff6b);
                 background-size: 300% 100%;
                 border-radius: 30px;
                 animation: animateBg 3s linear infinite;
+                transition: all .1s;
             }
-            /* @keyframes animateBg {
-            0% {
-                background-position: 0% 25%;
-            }
-            25% {
-                background-position: 50% 25%;
-            }
-            50%{
-                background-position: 50% 75%;
-            }
-            75%{
-                background-position: 75% 50%;
-            }
-            100%{
-                background-position: 100% 75%;
-            }
-            } */
+           
             @keyframes animateBg {
             0% {
                 background-position: 0% 50%;
@@ -181,10 +166,43 @@
                 margin-bottom: 5px;
                 line-height: 1.5;
             }
+            .pagination {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 20px;
+            }
+
+            .pagination button {
+                background-color: #007bff;
+                color: white;
+                border: none;
+                padding: 8px 15px;
+                font-size: 16px;
+                cursor: pointer;
+                border-radius: 5px;
+                transition: background 0.3s ease;
+            }
+
+            .pagination button:disabled {
+                background-color: #cccccc;
+                cursor: not-allowed;
+            }
+
+            .pagination button:hover:not(:disabled) {
+                background-color: #0056b3;
+            }
+
+            #page-info {
+                font-size: 16px;
+                font-weight: bold;
+            }
+
         </style>
 
         <!-- Blog area start here -->
-        <section class="blog-area pt-120 pb-120">
+        <!-- <section class="blog-area pt-120 pb-120">
             <div class="container">
                 <div class="row blog-container">
                     <div class="col-xl-3 col-lg-3 col-md-6 article-detail">
@@ -195,8 +213,8 @@
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-6 article-detail">
                         <div class="p-2">
-                            <h4 class="blog-title">How to Book a Professional Actor or Actress for Your Event: Tips for the Best Experience</h4>
-                           <button class="read-btn"> <a href="blog1.html">Read More</a></button>
+                            <h4 class="blog-title">Elevate Your Event with a Booked Poet – The Perfect Touch for Unforgettable Moments</h4>
+                           <button class="read-btn"> <a href="blog2.html">Read More</a></button>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-6 article-detail">
@@ -234,8 +252,22 @@
                 <a href="#0">03</a>
                 <a href="#0"><i class="fa-solid fa-arrow-right-long primary-color transition"></i></a>
             </div>
-        </section>
+        </section> -->
         <!-- Blog area end here -->
+
+        <section class="blog-area pt-120 pb-120">
+            <div class="container">
+                <div id="blog-container" class="row blog-container">
+                    <!-- Blogs will be inserted here dynamically -->
+                </div>
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button id="prev-btn" disabled>Previous</button>
+                    <span id="page-info"></span>
+                    <button id="next-btn">Next</button>
+                </div>
+            </div>
+        </section>
     </main>
 
      <!-- Footer area start here -->
@@ -289,8 +321,57 @@
     <script src="assets/js/jquery.waypoints.js"></script>
     <!-- Script Js -->
     <script src="assets/js/script.js"></script>
-
- 
+    <script>
+        const blogs = [
+            { title: "How to Book a Professional Actor or Actress for Your Event: Tips for the Best Experience", link: "blog1.html" },
+            { title: "Elevate Your Event with a Booked Poet – The Perfect Touch for Unforgettable Moments", link: "blog2.html" },
+     
+        ];
+    
+        let currentPage = 1;
+        const blogsPerPage = 6;
+    
+        function displayBlogs() {
+            const blogContainer = document.getElementById("blog-container");
+            blogContainer.innerHTML = "";
+            const startIndex = (currentPage - 1) * blogsPerPage;
+            const endIndex = startIndex + blogsPerPage;
+            const paginatedBlogs = blogs.slice(startIndex, endIndex);
+    
+            paginatedBlogs.forEach(blog => {
+                const blogDiv = document.createElement("div");
+                blogDiv.className = "col-xl-3 col-lg-3 col-md-6 article-detail";
+                blogDiv.innerHTML = `
+                    <div class="p-2">
+                        <h4 class="blog-title">${blog.title}</h4>
+                        <button class="read-btn"><a href="${blog.link}">Read More</a></button>
+                    </div>
+                `;
+                blogContainer.appendChild(blogDiv);
+            });
+    
+            document.getElementById("page-info").textContent = `Page ${currentPage} of ${Math.ceil(blogs.length / blogsPerPage)}`;
+            document.getElementById("prev-btn").disabled = currentPage === 1;
+            document.getElementById("next-btn").disabled = currentPage === Math.ceil(blogs.length / blogsPerPage);
+        }
+    
+        document.getElementById("prev-btn").addEventListener("click", () => {
+            if (currentPage > 1) {
+                currentPage--;
+                displayBlogs();
+            }
+        });
+    
+        document.getElementById("next-btn").addEventListener("click", () => {
+            if (currentPage < Math.ceil(blogs.length / blogsPerPage)) {
+                currentPage++;
+                displayBlogs();
+            }
+        });
+    
+        displayBlogs();
+    </script>
+    
       
 </body>
 
